@@ -9,22 +9,18 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        int[] A_arr = new int[N + 1]; // 구간합 배열
         int[] S_arr = new int[N + 1]; // Origin
 
         st = new StringTokenizer(bf.readLine());
-
-        for (int i = 1; i < A_arr.length; i++) {
-            S_arr[i] = Integer.parseInt(st.nextToken());
-            A_arr[i] = S_arr[i] + A_arr[i - 1];
+        for (int i = 1; i < S_arr.length; i++) {  // i < S_arr.length == i <= N
+            S_arr[i] = S_arr[i - 1] + Integer.parseInt(st.nextToken());
         }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(bf.readLine());
             int a1 = Integer.parseInt(st.nextToken());
             int a2 = Integer.parseInt(st.nextToken());
-
-            System.out.println(A_arr[a2] - A_arr[a1 - 1]);
+            System.out.println(S_arr[a2] - S_arr[a1 - 1]);
         }
     }
 }
