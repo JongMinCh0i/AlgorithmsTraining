@@ -5,13 +5,13 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        int N = sc.nextInt();
-        String str = sc.next();
+        int N = sc.nextInt(); // 5
+        String str = sc.next(); // 1,2,3 // nextLine을 사용했을 때 결과 확인
 
-        char[] charr = str.toCharArray();
+        byte[] charr = str.getBytes();
         int sum = 0;
 
-        for (char c : charr) {
+        for (byte c : charr) {
             sum += c - '0';
         }
         System.out.println(sum);
