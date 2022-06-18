@@ -1,13 +1,28 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
+// 자연수 N 과 M이 주어졌을 때,
+// 1부터 N까지 자연수 중에서 M개를 고른 수열
+// 중복이 허용
+
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static int N, M;
-    static int[] selected; 
-
     static StringBuilder sb = new StringBuilder();
+    static int N, M;
+    static int[] selected;
+
+    static void refFun(int k) {
+
+        if (k == M + 1) {
+            for (int i = 1; i <= M; i++) sb.append(selected[i]).append(' ');
+            sb.append('\n');
+        } else {
+            for (int cand = 1; cand <= N; cand++) {
+                selected[k] = cand;
+
+                refFun(k + 1);
+            }
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,26 +30,11 @@ public class Main {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        selected = new int[M + 1]; // k == M + 1 접근할 경우 종료
 
-        rec_func(1);
+        selected = new int[M + 1];
+
+        refFun(1);
+
         System.out.println(sb.toString());
-    }
-
-    // Recurrence Function (재귀 함수)
-    // k = index; k가 M + 1에 닿으면 종료 후 출력
-    // k = index; k가 M + 1에 닿기 전에는  selected[k] = cand; & rec_func(k + 1); 다음 인덱스로 접근
-
-    static void rec_func(int k) {
-        if (k == selected.length) {
-            for (int i = 1; i <= M; i++)
-                sb.append(selected[i]).append(' '); // 값의 호출
-            sb.append('\n');
-        } else {
-            for (int cand = 1; cand <= N; cand++) { // cand 는 1부터 시작
-                selected[k] = cand;                 // 값의 입력
-                rec_func(k + 1);
-            }
-        }
     }
 }
