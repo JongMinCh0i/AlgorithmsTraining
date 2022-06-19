@@ -1,25 +1,22 @@
-// 자연수 N 과 M이 주어졌을 때,
-// 1부터 N까지 자연수 중에서 M개를 고른 수열
-// 중복이 허용
-
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    static StringBuilder sb = new StringBuilder();
     static int N, M;
-    static int[] selected;
+    static int[] arr;
+    static StringBuilder sb = new StringBuilder();
 
-    static void refFun(int k) {
-
-        if (k == M + 1) {
-            for (int i = 1; i <= M; i++) sb.append(selected[i]).append(' ');
+    static void re_fun(int n) {
+        if (n == M + 1) { // 완전 탐색 종료
+            for (int i = 1; i <= M; i++) sb.append(arr[i]).append(' ');
             sb.append('\n');
         } else {
-            for (int cand = 1; cand <= N; cand++) {
-                selected[k] = cand;
+            for (int i = 1; i <= N; i++) {
+                arr[n] = i;
 
-                refFun(k + 1);
+                re_fun(n + 1);
             }
         }
     }
@@ -31,10 +28,10 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        selected = new int[M + 1];
+        arr = new int[M + 1];
 
-        refFun(1);
+        re_fun(1);
 
-        System.out.println(sb.toString());
+        System.out.print(sb.toString());
     }
 }
