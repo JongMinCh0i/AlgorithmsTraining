@@ -4,20 +4,28 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<String> starr = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
         String str = br.readLine();
+        int[] A = new int[str.length()];
 
         for (int i = 0; i < str.length(); i++) {
-            String st = str.substring(i, i + 1);
-            starr.add(st);
-            starr.sort(Collections.reverseOrder());
+            A[i] = Integer.parseInt(String.valueOf(str.charAt(i)));
         }
 
-        for (int j = 0; j < starr.size(); j++) {
-            sb.append(starr.get(j));
+        for (int i = 0; i < str.length(); i++) {
+            int Max = i;
+            for (int j = i + 1; j < str.length() ; j++) {
+                if (A[j] > A[Max]) {
+                    Max = j;
+                }
+                if (A[i] < A[Max]) {
+                    int temp = A[i];
+                    A[i] = A[Max];
+                    A[Max] = temp;
+                }
+            }
         }
-
-        System.out.println(sb);
+        for (int i = 0; i < str.length(); i++) {
+            System.out.print(A[i]);
+        }
     }
 }
