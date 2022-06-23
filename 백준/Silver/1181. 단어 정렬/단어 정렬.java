@@ -8,6 +8,7 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
 
+        // 객체 배열로 생성할 경우 배열의 멤버까지 중복성을 통해선 제거 할 수 없다.
         Set<String> set = new HashSet<>();
 
         List<Sort> newList = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Main {
         for (int i = 0; i < newList.size(); i++) {
             sb.append(newList.get((i)).str).append('\n');
         }
-        
+
         System.out.println(sb);
     }
 
