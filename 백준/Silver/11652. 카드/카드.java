@@ -2,89 +2,37 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static FastReader scan = new FastReader();
-    static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
 
-    static int N;
-    static long[] a;
-
-    static void input() {
-        N = scan.nextInt();
-        a = new long[N + 1];
+        long[] arr = new long[N + 1];
         for (int i = 1; i <= N; i++) {
-            a[i] = scan.nextLong();
+            arr[i] = Long.parseLong(br.readLine());
         }
-    }
 
-    static void pro() {
-        Arrays.sort(a, 1, N + 1);  // Sort
-        long mode = a[1];
-        int modeCnt = 1, curCnt = 1;  // mode: 최빈값, modeCnt: 최빈값의 등장 횟수, curCnt: 현재 값(a[1])의 등장 횟수
+        // 첫 번째 최빈값은 값이 진행 되는 순간 해당 값
+        // int mode로 값을 표현할 경우 해당 문제의 범위에서 overflow 및 underflow 발생
+        Arrays.sort(arr, 1, N + 1);
+        
+        long mode = arr[1];
+        // 최빈값이 등장했던 횟수
+        long modeCnt = 1;
+        //  현재 숫자의 등장 횟수
+        long currentCnt = 1;
+
 
         for (int i = 2; i <= N; i++) {
-            if (a[i] == a[i - 1]) {  // a[i] 라는 숫자가 계속 등장하고 있다.
-                curCnt++;
+            if (arr[i] == arr[i - 1]) {
+                currentCnt++;
             } else {
-                curCnt = 1;  // a[i] 라는 숫자가 새롭게 등장했다.
+                currentCnt = 1;
             }
-
-            if (curCnt > modeCnt) {
-                modeCnt = curCnt;
-                mode = a[i];
+            if (modeCnt < currentCnt) {
+                modeCnt = currentCnt;
+                mode = arr[i];
             }
         }
         System.out.println(mode);
-    }
-
-    public static void main(String[] args) {
-        input();
-        pro();
-    }
-
-
-    static class FastReader {
-        BufferedReader br;
-        StringTokenizer st;
-
-        public FastReader() {
-            br = new BufferedReader(new InputStreamReader(System.in));
-        }
-
-        public FastReader(String s) throws FileNotFoundException {
-            br = new BufferedReader(new FileReader(new File(s)));
-        }
-
-        String next() {
-            while (st == null || !st.hasMoreElements()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        String nextLine() {
-            String str = "";
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
     }
 }
