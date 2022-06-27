@@ -1,7 +1,9 @@
+package PS;
+
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Boj11650 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
@@ -22,8 +24,13 @@ public class Main {
 
     public static void sort(int[][] arr) {
         Arrays.sort(arr, (o1, o2) -> {
+            // o1[0] == x
+            // o1[1] == y 
+            // y가 같을 경우 
             if (o1[1] == o2[1])
+                // x 오름차순 정렬 
                 return o1[0] - o2[0];
+            // y가 다를 경우 y 오름 차순
             return o1[1] - o2[1];
 
         });
