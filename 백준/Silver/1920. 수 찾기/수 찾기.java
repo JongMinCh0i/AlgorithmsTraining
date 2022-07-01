@@ -1,7 +1,9 @@
+package PS;
+
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Boj1920 {
     static int N, M;
     static int[] A;
 
@@ -17,6 +19,7 @@ public class Main {
         for (int i = 1; i <= N; i++) {
             A[i] = Integer.parseInt(st.nextToken());
         }
+
         // A 배열 1부터 N + 1까지 정렬
         Arrays.sort(A, 1, N + 1);
 
@@ -25,6 +28,8 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
 
+
+        // M까지가 아닌 N까지로 하여 문제 발생
         for (int i = 1; i <= M; i++) {
             int n = Integer.parseInt(st.nextToken());
             System.out.println(binarySearch(A, n));
@@ -33,6 +38,11 @@ public class Main {
 
     public static int binarySearch(int[] arr, int A) {
         int L = 1;
+
+        // R = arr.length 라 하여 문제 발생
+        // R의 초기값은 길이 -1 로 하여야 한다.
+        // 그러지 않을 경우 mid의 값이 길이가 되어 index 초과 발생
+
         int R = arr.length - 1;
 
         while (L <= R) {
