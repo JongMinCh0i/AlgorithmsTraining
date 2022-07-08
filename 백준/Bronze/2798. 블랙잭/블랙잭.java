@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
 
-    static int N, M, max, temp, result;
+    static int N, M, max, temp;
 
     public static void main(String[] args) throws IOException {
 
@@ -28,19 +28,22 @@ public class Main {
                 for (int k = j + 1; k <= N; k++) {
                     int thirdCard = arr[k];
 
-                    temp = firstCard + secondCard + thirdCard;
+                    max = firstCard + secondCard + thirdCard;
 
-                    if (temp == M) {
-                        System.out.println(temp);
-                        System.exit(0);
+                    if (temp < max && max < M) {
+                        temp = max;
                     }
 
-                    if (result < temp && temp < M) {
-                        result = temp;
+                    if (max == M) {
+                        System.out.println(max);
+                        return;
+                        
+                        // break; 일 경우 해당 반복문만 탈출한다
+                        // return 일 경우 해당 반복묹 전체를 탈출한다.
                     }
                 }
             }
         }
-        System.out.println(result);
+        System.out.println(temp);
     }
 }
