@@ -1,72 +1,67 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    static StringTokenizer st;
-    static int T, N, M;
-    static int cnt = 0;
-    static int[] NList, RList;
+class Main {
+    static int[] N, M;
+    static int i, j, T;
     static BufferedReader br;
+    static StringTokenizer st;
 
     public static void main(String[] args) throws IOException {
         br = new BufferedReader(new InputStreamReader(System.in));
         T = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < T; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            N = Integer.parseInt(st.nextToken());
-            M = Integer.parseInt(st.nextToken());
-
-            NList = new int[N + 1];
-            RList = new int[M + 1];
-
-            addLeftList();
-            addRightList();
+        for (int i = 1; i <= T; i++) {
+            input();
             logic();
         }
     }
 
-    static void addLeftList() throws IOException {
+    static void input() throws IOException {
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
-            NList[i] = Integer.parseInt(st.nextToken());
+        i = Integer.parseInt(st.nextToken());
+        j = Integer.parseInt(st.nextToken());
+
+        N = new int[i + 1];
+        M = new int[j + 1];
+
+        st = new StringTokenizer(br.readLine());
+        for (int k = 1; k <= i; k++) {
+            N[k] = Integer.parseInt(st.nextToken());
+        }
+
+        st = new StringTokenizer(br.readLine());
+        for (int k = 1; k <= j; k++) {
+            M[k] = Integer.parseInt(st.nextToken());
         }
     }
 
-    static void addRightList() throws IOException {
-        st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= M; i++) {
-            RList[i] = Integer.parseInt(st.nextToken());
-        }
-    }
-
-    static int lower_bound(int[] arr, int N) {
-
-        int L = 1;
-        int R = RList.length - 1;
-
-        int res = 0; // L - 1인 이유는 아무런 값이 없을 경우 자기 자신을 돌리게 하기 위해서
+    static int lower_bound(int[] arr, int L, int R, int X) {
+        // arr[L...R]에서 X 미만의 수 중 제일 오른쪽 인덱스를 return 하는 함수
+        // ex) 11,12,34,53 x = 34 , 34미만의 수 11, 12 중 12 리턴
+        // 목표 결괏값의 L - 1  == 왼쪽미만에서 가장 오른쪽
+        int result = L - 1;
 
         while (L <= R) {
             int mid = (L + R) / 2;
-            if (arr[mid] < N) {
-                res = mid; // res 결과 값 res 아래로는 다 허용 된다는 뜻
+            if (arr[mid] < X) {
+                result = mid;
                 L = mid + 1;
-            } else if (arr[mid] >= N) {
+            } else {
                 R = mid - 1;
             }
         }
-        return res;
+        return result;
     }
 
     static void logic() {
-        cnt = 0;
+        // M 번 배열의 1번 인데스 부터 J + 1 // 끝까지 정렬한다.
+        // 중요 1부터 시작한다.
+        Arrays.sort(M, 1, j + 1);
 
-        Arrays.sort(RList, 1, M + 1);
-
-        for (int i = 1; i <= N; i++) {
-
-            cnt += lower_bound(RList, NList[i]);
+        int cnt = 0;
+        for (int k = 1; k <= i; k++) {
+            cnt += lower_bound(M, 1, j, N[k]);
         }
 
         System.out.println(cnt);
