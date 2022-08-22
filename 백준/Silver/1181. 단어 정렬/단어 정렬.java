@@ -1,52 +1,67 @@
+// Set, Comparable, 정렬 기준,
+// Set<Object> 의 경우 Collection.Sort()를 통해 Object 멤버 또한 정렬되는가
+
 import java.io.*;
 import java.util.*;
 
 public class Main {
+    static BufferedReader br;
+    static int N;
+    static List<Name> nameList;
+    static StringBuilder sb;
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        input();
+        logic();
+    }
 
-        int N = Integer.parseInt(br.readLine());
+    static void input() throws IOException {
+        Set<String> setName = new HashSet<>();
+        br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
+        nameList = new ArrayList<>();
+        N = Integer.parseInt(br.readLine());
 
-        Set<String> set = new HashSet<>();
+        for (int i = 0; i < N; i++) {
+            String str = br.readLine();
 
-        List<Sort> newList = new ArrayList<>();
-
-        String str;
-
-        for (int j = 0; j < N; j++) {
-            str = br.readLine();
-            set.add(str);
+            setName.add(str);
         }
-        Iterator<String> iterator = set.iterator();
+
+        Iterator<String> iterator = setName.iterator();
+
         while (iterator.hasNext()) {
-            newList.add(new Sort(iterator.next()));
+            nameList.add(new Name(iterator.next()));
+        }
+    }
+
+    static void logic() throws IOException {
+        Collections.sort(nameList);
+
+        for (int i = 0; i < nameList.size(); i++) {
+            sb.append(nameList.get(i).str).append('\n');
         }
 
-        Collections.sort(newList);
-
-        for (int i = 0; i < newList.size(); i++) {
-            sb.append(newList.get((i)).str).append('\n');
-        }
-        
         System.out.println(sb);
+
     }
 
-    static class Sort implements Comparable<Sort> {
+        static class Name implements Comparable<Name> {
+            public String str;
 
-        String str;
-
-        public Sort(String str) {
-            this.str = str;
-        }
-
-        @Override
-        public int compareTo(Sort o) {
-            if (str.length() == o.str.length()) {
-                return str.compareTo(o.str);
+            public Name(String str) {
+                this.str = str;
             }
-            return (str.length() - o.str.length());
+
+            @Override
+            public int compareTo(Name o) {
+                if (str.length() == o.str.length()) {
+                    return str.compareTo(o.str);
+                }
+
+                return str.length() - o.str.length();
+
+            }
         }
     }
-}
 
