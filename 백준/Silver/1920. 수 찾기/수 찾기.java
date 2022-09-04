@@ -1,58 +1,55 @@
-package PS;
-
 import java.io.*;
 import java.util.*;
 
-public class Boj1920 {
+public class Main {
     static int N, M;
     static int[] A;
+    static BufferedReader br;
+    static StringTokenizer st;
+    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        input();
+        logic();
+    }
 
-        N = Integer.parseInt(st.nextToken());
+    static void input() throws IOException {
+        sb = new StringBuilder();
+        br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+
+        st = new StringTokenizer(br.readLine());
         A = new int[N + 1];
 
-        st = new StringTokenizer(br.readLine());
-        // A 배열에 값 입력
         for (int i = 1; i <= N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
-        }
-
-        // A 배열 1부터 N + 1까지 정렬
-        Arrays.sort(A, 1, N + 1);
-
-        st = new StringTokenizer(br.readLine());
-        M = Integer.parseInt(st.nextToken());
-
-        st = new StringTokenizer(br.readLine());
-
-
-        // M까지가 아닌 N까지로 하여 문제 발생
-        for (int i = 1; i <= M; i++) {
-            int n = Integer.parseInt(st.nextToken());
-            System.out.println(binarySearch(A, n));
+            int num = Integer.parseInt(st.nextToken());
+            A[i] = num;
         }
     }
 
-    public static int binarySearch(int[] arr, int A) {
-        int L = 1;
+    static void logic() throws IOException {
+        M = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
 
-        // R = arr.length 라 하여 문제 발생
-        // R의 초기값은 길이 -1 로 하여야 한다.
-        // 그러지 않을 경우 mid의 값이 길이가 되어 index 초과 발생
+        Arrays.sort(A, 1, N + 1);
+        for (int i = 1; i <= M; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            sb.append(binarySearch(A, 1, N, num)).append('\n');
+        }
 
-        int R = arr.length - 1;
+        System.out.println(sb);
+    }
 
+    static int binarySearch(int[] arr, int L, int R, int X) {
         while (L <= R) {
             int mid = (L + R) / 2;
-            if (arr[mid] == A) {
-                return 1;
-            } else if (arr[mid] < A) {
+
+            if (arr[mid] < X) {
                 L = mid + 1;
-            } else if (arr[mid] > A) {
+            } else if (arr[mid] > X) {
                 R = mid - 1;
+            } else {
+                return 1;
             }
         }
         return 0;
