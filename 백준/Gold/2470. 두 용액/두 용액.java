@@ -34,24 +34,22 @@ class Main {
         int v2 = 0;
 
         for (int i = 0; i < N; i++) {
-            int cand = lower_Bound(arrInt, i + 1, N, -arrInt[i]);
+            int cand = lower_Bound(arrInt, i + 1, N, arrInt[i] * -1);
 
             if (i < cand - 1 && Math.abs(arrInt[i] + arrInt[cand - 1]) < bestNum) {
                 bestNum = Math.abs(arrInt[i] + arrInt[cand - 1]);
                 v1 = arrInt[i];
                 v2 = arrInt[cand - 1];
             }
-                
+            
             if (cand < N && Math.abs(arrInt[i] + arrInt[cand]) < bestNum) {
                 bestNum = Math.abs(arrInt[i] + arrInt[cand]);
                 v1 = arrInt[i];
                 v2 = arrInt[cand];
             }
         }
-
         sb.append(v1).append(' ').append(v2);
         System.out.println(sb);
-
     }
 
     static int lower_Bound(int[] arr, int L, int R, int X) {
@@ -63,7 +61,6 @@ class Main {
                 L = mid + 1;
             }
         }
-
         return L;
     }
 }
