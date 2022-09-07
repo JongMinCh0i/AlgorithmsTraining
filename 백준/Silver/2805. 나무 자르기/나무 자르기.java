@@ -26,6 +26,8 @@ class Main {
         for (int i = 0; i < N; i++) {
             arr[i] = Long.parseLong(st.nextToken());
         }
+
+        Arrays.sort(arr);
     }
 
     // 정답인 H를 파리미터에 넣음
@@ -46,16 +48,13 @@ class Main {
         } else {
             return false;
         }
-        
-        
     }
 
     static void logic() {
-        long L = 1, R = 2000000000, ans = 0;
+        long L = 1, R = arr[arr.length - 1], ans = 0;
         // [L....R] 범위 안에 정답이 존재 한다.
         // 이분 탐색과 determination 활용해서 answer 구하기
 
-        Arrays.sort(arr);
 
         while (L <= R) {
             int mid = (int) ((L + R) / 2);
