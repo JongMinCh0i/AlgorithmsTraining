@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = 0;
@@ -11,7 +12,7 @@ public class Main {
             N += temp * temp;
         }
         int answer = N % 10;
-        
-        System.out.println(answer);
+        sb.append(answer);
+        System.out.println(sb);
     }
 }
