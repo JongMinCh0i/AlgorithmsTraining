@@ -1,71 +1,54 @@
-package PS;
-
 import java.io.*;
 import java.util.*;
 
-public class Boj10825 {
-    static int cnt;
-    static Score[] arrScore;
-    static StringBuilder sb;
-    static BufferedReader br;
-    static StringTokenizer st;
-
+public class Main {
     public static void main(String[] args) throws IOException {
-        input();
-        logic();
-    }
-
-    static void input() throws IOException {
-        sb = new StringBuilder();
-        br = new BufferedReader(new InputStreamReader(System.in));
-        cnt = Integer.parseInt(br.readLine());
-
-        arrScore = new Score[cnt];
-
-        for (int i = 0; i < cnt; i++) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        int A = Integer.parseInt(br.readLine());
+        // Score 배열을 A 만큼 생성
+        Score[] scores = new Score[A];
+        // Input
+        for (int i = 0; i < A; i++) {
             st = new StringTokenizer(br.readLine());
-            String name = st.nextToken();
-            int lang = Integer.parseInt(st.nextToken());
-            int eng = Integer.parseInt(st.nextToken());
-            int math = Integer.parseInt(st.nextToken());
-            arrScore[i] = new Score(name, lang, eng, math);
+            scores[i] = new Score(st.nextToken(), Integer.parseInt(st.nextToken()),
+                    Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
         }
-    }
 
-    static void logic() {
-        Arrays.sort(arrScore);
-        for (int i = 0; i < cnt; i++) {
-            sb.append(arrScore[i].name).append('\n');
+        // 정렬
+        Arrays.sort(scores);
+        for (int i = 0; i < A; i++) {
+            sb.append(scores[i].str).append('\n');
         }
         System.out.println(sb);
     }
 
     static class Score implements Comparable<Score> {
-        String name;
-        int lang, eng, math;
+        String str;
+        int langScore, mathScore, engScore;
 
-        // constructor
-        public Score(String name, int lang, int eng, int math) {
-            this.name = name;
-            this.lang = lang;
-            this.eng = eng;
-            this.math = math;
+        // 초기화
+        public Score(String str, int langScore, int engScore, int mathScore) {
+            this.str = str;
+            this.langScore = langScore;
+            this.engScore = engScore;
+            this.mathScore = mathScore;
         }
 
-        // 리턴 값 반환
+        // 정렬 조건 제시
         @Override
-        public int compareTo(Score other) {
-            if (other.lang == this.lang && other.eng == this.eng && this.math == other.math) {
-//                return this.name.charAt(0) - other.name.charAt(0); // 오름차순 (첫번째 문자만 비교하기에 틀림)
-                 return this.name.compareTo(other.name);
-                // return other.name.compareTo(this.name); 내림차순
-
-            } else if (other.eng == this.eng && other.lang == this.lang) {
-                return other.math - this.math;
-            } else if (other.lang == this.lang) {
-                return this.eng - other.eng;
+        public int compareTo(Score o) {
+            if (this.langScore != o.langScore) {
+                return o.langScore - this.langScore;
             }
-            return other.lang - this.lang;
+            if (this.engScore != o.engScore) {
+                return this.engScore - o.engScore;
+            }
+            if (this.mathScore != o.mathScore) {
+                return o.mathScore - this.mathScore;
+            }
+            return str.compareTo(o.str);
         }
     }
 }
