@@ -1,9 +1,7 @@
-package PS;
-
 import java.io.*;
 import java.util.*;
 
-public class Boj11652 {
+public class Main {
     static BufferedReader br;
     static int N;
     static long[] arrLong;
@@ -37,10 +35,7 @@ public class Boj11652 {
             } else if (arrLong[i] != arrLong[i - 1]) {
                 modeCnt = 1;
             }
-            
-            // 초기 1회는 temp에 modeCnt 저장됨 
-            // 이후 저장된 modeCnt이후 값의 비교 
-            // 기존보다 많은 cnt의 경우 mdoe 값 변경
+
             if (modeCnt > tempCnt) {
                 tempCnt = modeCnt;
                 mode = arrLong[i];
