@@ -2,12 +2,10 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    //3가지 : StringBuilder, StringTokenizer, BufferedReader
-    static StringBuilder sb;
     static BufferedReader br;
-    static int N;
+    static StringBuilder sb;
+    static int N; // 입력받는 수
     static int[] arr;
-
     public static void main(String[] args) throws IOException {
         input();
         logic();
@@ -17,20 +15,25 @@ public class Main {
         sb = new StringBuilder();
         br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
+
         arr = new int[N];
 
         for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+            int num = Integer.parseInt(br.readLine());
+            arr[i] = num;
         }
     }
 
     static void logic() {
         Arrays.sort(arr);
+
         for (int i = 0; i < N; i++) {
-            int num = arr[i];
-            sb.append(num).append('\n');
+            int ans = arr[i];
+
+            sb.append(ans).append('\n');
         }
 
         System.out.println(sb);
     }
+
 }
