@@ -6,10 +6,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
-        // 조건 생성
+        // 우선순위 큐 기본 설정 
         PriorityQueue<Integer> MyQueue1 = new PriorityQueue<>();
 
         for (int i = 0; i < N; i++) {
+            // input
             int M = Integer.parseInt(br.readLine());
             if (M == 0) {
                 if (MyQueue1.isEmpty())
