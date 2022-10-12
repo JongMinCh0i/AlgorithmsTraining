@@ -17,12 +17,12 @@ public class Main {
             int dy = j + check[k][1];
             if (dx < 0 || dy < 0 || dx >= N || dy >= M) continue;
             if (visit[dx][dy]) continue;
-            if (map[dx][dy] == 0) {
-                continue;
-            }
-            dfs(dx, dy);
-        }
+            if (map[dx][dy] == 0) continue;
+
+        dfs(dx, dy);
     }
+
+}
 
     public static void search() {
         for (int i = 0; i < N; i++) {
