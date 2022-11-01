@@ -4,11 +4,11 @@
 
 ### 성능 요약
 
-메모리: 11512 KB, 시간: 80 ms
+메모리: 11548 KB, 시간: 76 ms
 
 ### 분류
 
-구현(implementation)
+구현(implementation), 수학(math)
 
 ### 문제 설명
 
