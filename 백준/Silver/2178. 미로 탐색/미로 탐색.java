@@ -43,7 +43,6 @@ public class Main {
     }
 
     // 왜 dfs가 아니라 bfs일까?
-    // 간선의 최소, 최대 거리를 알아볼 경우 bfs를 통해 각 V 별 거리를 구할 수 있다. 
     public static void bfs(int x, int y) {
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < N; i++) {
