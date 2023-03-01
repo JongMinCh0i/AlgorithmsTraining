@@ -1,42 +1,37 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
     static int N, M;
-    static BufferedReader br;
-    static StringTokenizer st;
-    static StringBuilder sb;
-    static int[] selected;
+    static int[] arr;
+    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        input();
-        rec_fun(0);
-        System.out.println(sb);
+    static void re_fun(int n) {
+        if (n == M + 1) { // 완전 탐색 종료
+            for (int i = 1; i <= M; i++) sb.append(arr[i]).append(' ');
+            sb.append('\n');
+        } else {
+            for (int i = 1; i <= N; i++) {
+                arr[n] = i;
+
+                re_fun(n + 1);
+            }
+        }
     }
 
-    static void input() throws IOException {
-        sb = new StringBuilder();
-        br = new BufferedReader(new InputStreamReader(System.in));
-        st = new StringTokenizer(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        selected = new int[M];
-    }
 
-    static void rec_fun(int k) { // 현재까지 K개 까지 수를 택했음
-        if (k == M) {            // M개를 모두 택했으면 (Base Condition)
-            for (int i = 0; i < M; i++) {
-                sb.append(selected[i]).append(" "); // selected 에 기록해둔 수를 출력
-            }
-            sb.append('\n');
-        } else {
-            // 1 ~ N 까지를 k 번 원소로 한 번씩 정하고,
-            // 다음 수를 정하러 한 단계 더 들어감 (k는 selected의 다음 IDX를 선택함 , 값의 변화는 for문에서 이뤄짐)
-            for (int i = 1; i <= N; i++) {
-                selected[k] = i;
-                rec_fun(k + 1);
-            }
-        }
+        arr = new int[M + 1];
+
+        re_fun(1);
+
+        System.out.print(sb.toString());
     }
 }
