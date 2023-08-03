@@ -5,10 +5,10 @@ map<int , string> mp;
 map<string , int> mp2;
 int N, M;
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-
+        ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    
     cin >> N >> M;
 
     for (int i = 1; i <= N; i++) {
@@ -28,4 +28,5 @@ int main() {
             cout << mp2[str] << '\n';                    // 문자
         }
     }
+
 }
