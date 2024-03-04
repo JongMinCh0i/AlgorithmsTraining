@@ -29,16 +29,18 @@ class Solution {
             
             int nx = x + offset[0];
             int ny = y + offset[1];
+
             if(!validRange(nx, ny)) {
                 continue;
             }
+
             answer.add(x + " " + y + " " + nx + " " + ny);
             answer.add(nx + " " + ny + " " + x + " " + y);
                
-               x = nx;
-               y = ny;
+            x = nx;
+            y = ny;
         }
-               return answer.size() / 2;
+            return answer.size() / 2;
     }
 }
               
