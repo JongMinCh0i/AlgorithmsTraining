@@ -1,27 +1,34 @@
+
 import java.io.*;
 import java.util.*;
-
 class Solution {
     boolean solution(String s) {
-        Stack<Character> stk = new Stack<>();
+        ArrayDeque<Character> stack = new ArrayDeque<>();
         
-        for(int i = 0; i< s.length(); i++) {
-            char ch = s.charAt(i);
+        boolean answer = false;
+        
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == ')' && stack.isEmpty()) {
+                return false;
+            } 
             
-            if(ch == '(') stk.push(ch);
             
-            if(ch == ')') {
-                if(stk.empty() || stk.peek() != '(') {
-                    return false;
-                } else {
-                    stk.pop();
+            if(s.charAt(i) == ')' && !stack.isEmpty()) {
+                if(stack.peek().equals('(')){
+                    stack.pop();
                 }
-            }   
+            } 
+            
+            if(s.charAt(i) == '(') {
+                stack.push(s.charAt(i));
+            } 
         }
         
-        if(!stk.empty()) 
-            return false;
+        if(stack.isEmpty()){
+            answer = true; 
+        } 
+        
 
-        return true;
+        return answer;
     }
 }
