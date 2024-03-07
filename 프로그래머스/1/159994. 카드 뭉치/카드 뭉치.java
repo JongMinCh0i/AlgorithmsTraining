@@ -6,9 +6,7 @@ class Solution {
     private static ArrayDeque<String> of(String[] cards){
         ArrayDeque<String> stk = new ArrayDeque<String>();
         
-        for(int i = cards.length - 1; i >= 0; i--) {
-            stk.push(cards[i]);
-        }
+        for(int i = cards.length - 1; i >= 0; i--) stk.push(cards[i]);
 
         return stk;
     }
@@ -30,6 +28,6 @@ class Solution {
             }
         }
         
-       return (Arrays.equals(answer, goal)) ? "Yes" : "No";
+         return (Arrays.equals(answer, goal)) ? "Yes" : "No";
     }
 }
