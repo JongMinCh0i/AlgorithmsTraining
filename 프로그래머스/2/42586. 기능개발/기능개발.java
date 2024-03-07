@@ -24,8 +24,6 @@ class Solution {
             }
         }
         answer.add(count);
-
-        // Remove the first element (0) as it's just a placeholder
         answer.remove(0);
 
         return answer;
