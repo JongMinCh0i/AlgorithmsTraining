@@ -1,29 +1,22 @@
-import java.io.*;
 import java.util.*;
 
 class Solution {
-    
-    private static final int SUCCESS = 1;
-    private static final int FAIL = 0;
-    
+    public static Stack<Character> stk = new Stack<>();
+
     public int solution(String s) {
-        ArrayDeque<Character> stack = new ArrayDeque<>();
+        char[] chArr = s.toCharArray();
+        
+        for(int i = 0; i < chArr.length; i++) {
+            char ch = chArr[i];
             
-        for(int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            
-            if(!stack.isEmpty() && stack.peek().equals(ch)) {
-                stack.pop();
-            }else{
-                stack.push(ch);                
+            if(!stk.isEmpty() && stk.peek() == ch) {
+                stk.pop();
+            } else {
+                stk.push(ch);
             }
-          
+    
         }
         
-        if(stack.isEmpty()) {
-            return SUCCESS;
-        }
-
-        return FAIL;
+        return stk.isEmpty() ? 1 : 0;
     }
-}   
+}
