@@ -1,61 +1,48 @@
 /*
-hint : 장바구니는 stack으로 정의 해서 값을 놓기전에 Stack 의 값이 있다면! top의 값과 둘 값을 비교하여 
-같으면 pop 하고 count + 2 처리한다. 
-
-풀이 방법 1. 
-board의 가로 row 값 만큼 stack을 생성함
-이후 해당 board를 O(n^2) 만큼 순회하면서 각 column에 맞는 인형을 잡아서 보관함에 넣어서 peek 과 비교
+생각할 지점,
+1.init 을 통해서 2차원 배열을 List<Stack<Integer>> 로 변경하고 해당 값들을 담는다
+2.moves를 통해 해당 idx 의 List 에 위치한 Stack 의 Integer 를 하나씩 꺼내고 이를 바구니에 담는다.
+3.바구니(stack)에 담기 직전 해당 바구니에서 top 과 담을 Integer를 비교 하고 같을 경우 pop 하고 이를 카운팅 한다.
 */
 
 import java.util.*;
 
-class Solution {                
+class Solution {
+    public static Stack<Integer> basket = new Stack<>();
+    public static int answer = 0;
+    
     public int solution(int[][] board, int[] moves) {
-        int gameCounter = 0;
-        
-        // 게임 세팅
-        ArrayDeque<Integer> scoreStack = new ArrayDeque<>();
-        List<Stack<Integer>> boards = new ArrayList<>();
-        
-        int rowNumber = board[0].length;
-        
-        for(int i = 0; i < rowNumber; i++){
-            boards.add(new Stack<Integer>());
-        }
-        
-        for(int i = rowNumber - 1; i >= 0; i--) {
-            int[] arr = board[i];
-            for(int j = 0; j < arr.length; j++) {
-                if(arr[j] == 0) continue;
-                boards.get(j).push(arr[j]);
-            }
-        }
+        List<Stack<Integer>> boardList = new ArrayList<Stack<Integer>>();    
+        int listSize = board[0].length;
 
-        // 게임 진행
-        for(int i = 0; i < moves.length; i++) { 
-            Stack<Integer> singleBoard = boards.get(moves[i] - 1);
-            
-            // 비어있으면 뽑을게 없으니까 continue;
-            if(singleBoard.isEmpty()) continue;
-            
-            // 사이즈가 있으면 뽑는다.
-            Integer doll = singleBoard.pop();
-            
-             // 만약에 스코어 스택이 1개 이상일 경우 같이 만나서 터질 수 있을 가능성이 있음 -> 검사 진행
-             // 새롭게 뽑은 인형과 현재 스코어 스택 top과 비교!
-            
-            if(!scoreStack.isEmpty()) {
-                Integer doll2 = scoreStack.peek();
-                
-               if(doll.equals(doll2)) {
-                    scoreStack.pop();
-                    gameCounter += 2;
-                    continue;
-                }
-            }
-            scoreStack.push(doll);
+        for(int i = 0; i < listSize; i++) {
+            boardList.add(i, new Stack<Integer>()); // ArrayList 문법. 주의!!
         }
         
-        return gameCounter;
-    } 
+        for(int i = 0; i < listSize; i++) {
+            int[] boardRow = board[listSize - (i + 1)]; // 4 3 2 1 0
+            
+            for(int j = 0; j < boardRow.length; j++) {
+                Stack<Integer> stk = boardList.get(j);
+                if(boardRow[j] != 0) stk.push(boardRow[j]);
+            }
+        }
+        
+        // moves를 통해 해당 idx 의 List 에 위치한 Stack 의 Integer 를 하나씩 꺼내서 바구니 담음
+        for(int i = 0; i < moves.length; i++) {
+            int point = moves[i];
+            Stack<Integer> boardStk = boardList.get(point - 1);
+            
+            if(boardStk.isEmpty()) continue;
+            Integer cand = boardStk.pop();
+            
+            if(!basket.isEmpty() && basket.peek().equals(cand)) {
+                basket.pop();
+                answer+=2;
+            } else {
+                basket.push(cand);
+            }
+        }
+        return answer;
+    }
 }
