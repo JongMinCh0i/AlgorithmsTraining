@@ -1,33 +1,41 @@
-import java.io.*;
 import java.util.*;
 
 class Solution {
     
-    private static ArrayDeque<String> of(String[] cards){
-        ArrayDeque<String> stk = new ArrayDeque<String>();
+    public static int cnt = 0;
+    public static Stack<String> card1 = new Stack<>();
+    public static Stack<String> card2 = new Stack<>();
+    
+    public void init(String[] cards1, String[] cards2) {
         
-        for(int i = cards.length - 1; i >= 0; i--) stk.push(cards[i]);
-
-        return stk;
+        for(int i = cards1.length - 1; i >= 0; i--) {
+            card1.push(cards1[i]);
+        }
+        
+        for(int i = cards2.length - 1; i >= 0; i--) {
+            card2.push(cards2[i]);
+        }
     }
     
-    public String solution(String[] cards1, String[] cards2, String[] goal) {
-        ArrayDeque<String> cardStk1 = Solution.of(cards1);
-        ArrayDeque<String> cardStk2 = Solution.of(cards2);
-        String[] answer = new String[goal.length];
-        // cardStk1의 길이가 10  cardStk2의 길이가 10 goal의 길이가 5 일수도 있음
+    public Boolean logic(String[] goal) {
         
         for(int i = 0; i < goal.length; i++) {
-            if(!cardStk1.isEmpty() && goal[i].equals(cardStk1.peek())) {
-                answer[i] = cardStk1.peek();
-                cardStk1.pop();
-                
-            } else if(!cardStk2.isEmpty() && goal[i].equals(cardStk2.peek())) {
-                answer[i] = cardStk2.peek();
-                cardStk2.pop();
+            String cand = goal[i];
+
+            if(!card1.isEmpty() && card1.peek().equals(cand)) {
+                card1.pop();
+                cnt++;
+            } else if(!card2.isEmpty() && card2.peek().equals(cand)) {
+                card2.pop();
+                cnt++;
             }
         }
         
-         return (Arrays.equals(answer, goal)) ? "Yes" : "No";
+        return cnt == goal.length ? true : false;
+    }
+    
+    public String solution(String[] cards1, String[] cards2, String[] goal) {
+        init(cards1, cards2);
+        return logic(goal) ? "Yes" : "No";
     }
 }
