@@ -2,40 +2,37 @@ import java.io.*;
 import java.util.*;
 
 class Solution {
-    
-    static int[] number1_human = {1,2,3,4,5};
-    static int[] number2_human = {2,1,2,3,2,4,2,5};
-    static int[] number3_human = {3,3,1,1,2,2,4,4,5,5};
-    static int[] score = {0,0,0};
-    
-    public int[] solution(int[] qna) {
-        collect(qna, number1_human, 0);
-        collect(qna, number2_human, 1);
-        collect(qna, number3_human, 2);
-             
-        // 최대 값을 확인한다.
-        int maxscore = Arrays.stream(score).max().getAsInt();
-        
-        // 값이 같으면 오름차순 정렬 
-        ArrayList<Integer> answer = new ArrayList<>();
 
-        for(int i = 0; i < score.length; i++) {
-            if(score[i] == maxscore) {
-                answer.add(i + 1);
-            }
-        }
-        return answer.stream().mapToInt(Integer::intValue).toArray();
-    }
-    
-    public static void collect(int[] qna, int answer[], int who){
-         // 1,2,3,4,5 이후에도 문제가 늘어나면? 문제가 6문제지만 answer는 이미 5까지 다 가면 풀이가 안된다.
+    public int[] solution(int[] answers) {
         
-        for(int i = 0; i < qna.length; i++) { 
-            int answer_idx = i % answer.length;
-            
-            if(qna[i] == answer[answer_idx]) {
-                score[who]++;
+        int[] temp = new int[3];
+        int[] user1 = {1, 2, 3, 4, 5};
+        int[] user2 = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] user3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
+        int countScoreUser_1 = 0;
+        int countScoreUser_2 = 0;
+        int countScoreUser_3 = 0;
+
+        for (int i = 0; i < answers.length; i++) {
+            if (answers[i] == user1[i % user1.length]) countScoreUser_1++;
+            if (answers[i] == user2[i % user2.length]) countScoreUser_2++;
+            if (answers[i] == user3[i % user3.length]) countScoreUser_3++;
+        }
+
+        temp[0] = countScoreUser_1;
+        temp[1] = countScoreUser_2;
+        temp[2] = countScoreUser_3;
+
+        int max_value = Math.max(temp[0], Math.max(temp[1], temp[2]));
+
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if (temp[i] == max_value) {
+                result.add(i + 1); 
             }
         }
-    }    
+        
+        return result.stream().mapToInt(i -> i).toArray();
+    }
 }
