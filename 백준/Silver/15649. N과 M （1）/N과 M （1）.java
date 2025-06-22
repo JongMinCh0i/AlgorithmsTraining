@@ -1,43 +1,52 @@
+
 import java.io.*;
 import java.util.*;
 
+// 중복 없이, (2, 2) X
+// 오름 차순 (1, 2), (2,3)
+
 public class Main {
 
+    static StringBuilder sb;
+    static StringTokenizer st;
+    static BufferedReader br;
     static int N, M;
-    static int[] list, used;
-
-    static StringBuilder sb = new StringBuilder();
+    static int[] answer, used;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        sb = new StringBuilder();
+        br = new BufferedReader(new InputStreamReader(System.in));
+        st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        list = new int[M + 1];
+
+        answer = new int[M];
         used = new int[N + 1];
 
-        ref_func(1);
-        System.out.println(sb.toString());
+        rec_fun(0);
+        System.out.println(sb);
     }
 
-    static void ref_func(int k) {
-        if (k == M + 1) {
-            for (int i = 1; i <= M; i++) sb.append(list[i]).append(' ');
-            sb.append('\n');
-
-        } else {
-            for (int cand = 1; cand <= N; cand++) {
-                if (used[cand] == 1) continue;
-                list[k] = cand;
-                used[cand] = 1;
-
-                ref_func(k + 1);
-
-                list[k] = 0;
-                used[cand] = 0;
+    public static void rec_fun(int k) {
+        // 조건에 맞는 탐색을 1개라도 성공했을 때
+        if (k == M) {
+            for (int i = 0; i < answer.length; i++) {
+                sb.append(answer[i]).append(' ');
             }
+            sb.append('\n');
+            return;
+        }
+
+        // 오름차순, 중복 없이
+        // cand 번 째 부터 M번째 원소를 조건에 맞게 고르는 모든 방법 시도.
+        for (int cand = 1; cand <= N; cand++) {
+            if(used[cand] == 1) continue;
+
+            answer[k] = cand; // 0번에 1번 사용
+            used[cand] = 1; // 1번 사용
+            rec_fun(k + 1);
+            used[cand] = 0;
         }
     }
 }
-
